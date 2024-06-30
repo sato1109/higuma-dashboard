@@ -7,6 +7,9 @@ authors = [
 ]
 dependencies = [
     "streamlit>=1.36.0",
+    "folium>=0.17.0",
+    "streamlit-folium>=0.21.0",
+    "matplotlib>=3.9.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.10"
