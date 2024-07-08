@@ -12,14 +12,24 @@ st.title("Folium Map in Streamlit - Hakodate")
 map_center = [41.768793, 140.728810]  # 函館の座標
 zoom_level = 10
 
-# Foliumで地図を作成
-m = folium.Map(location=map_center, zoom_start=zoom_level)
+# Mapboxのアクセストークンを設定
+mapbox_token = 'pk.eyJ1IjoiYXRvcmluZ28iLCJhIjoiY2x5MTVsZmJmMHMzczJqc2Y3eTF4OGloZSJ9.tirdN2DwOiWfieuPP0UXoA'  
+
+# Foliumで地図を作成（Mapboxタイルを使用）
+m = folium.Map(
+    location=map_center, 
+    zoom_start=zoom_level,
+    # 形式変更したい場合dark-v10の部分を変更
+    # 「light-v10」、「outdoors-v11」、「satellite-v9」、「satellite-streets-v11」など
+    tiles='https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=' + mapbox_token,
+    attr='Mapbox'
+)
 
 # Imgurにアップロードした画像のURL
 image_url = "https://i.imgur.com/U78yYF5.png"
 
-# ポップアップに表示するHTMLを作成
-popup_html = f"""
+# ツールチップに表示するHTMLを作成
+tooltip_html = f"""
     <b>Hakodate Station</b><br>
     <i>Location:</i> Hakodate, Hokkaido, Japan<br>
     <i>Opened:</i> 1902<br>
@@ -34,8 +44,7 @@ custom_icon = folium.Icon(color='red', icon='info-sign')
 # 地図上にマーカーを追加
 folium.Marker(
     [41.768793, 140.728810], 
-    tooltip='Hakodate Station', 
-    popup=folium.Popup(popup_html, max_width=300),
+    tooltip=tooltip_html, 
     icon=custom_icon
 ).add_to(m)
 
@@ -65,4 +74,3 @@ with col1:
 with col2:
     fig = create_color_bar()
     st.pyplot(fig)
-
