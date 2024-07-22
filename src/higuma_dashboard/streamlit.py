@@ -3,7 +3,10 @@ import folium
 from streamlit_folium import folium_static
 import matplotlib.pyplot as plt
 import numpy as np
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 # Streamlitのタイトル
 st.title("Folium Map in Streamlit - Hakodate")
@@ -13,7 +16,7 @@ map_center = [41.768793, 140.728810]  # 函館の座標
 zoom_level = 10
 
 # Mapboxのアクセストークンを設定
-mapbox_token = 'pk.eyJ1IjoiYXRvcmluZ28iLCJhIjoiY2x5MTVsZmJmMHMzczJqc2Y3eTF4OGloZSJ9.tirdN2DwOiWfieuPP0UXoA'  
+mapbox_token = os.getenv("MAPBOX_TOKEN")
 
 # Foliumで地図を作成（Mapboxタイルを使用）
 m = folium.Map(
