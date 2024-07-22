@@ -97,6 +97,8 @@ pyparsing==3.1.2
 python-dateutil==2.9.0.post0
     # via matplotlib
     # via pandas
+python-dotenv==1.0.1
+    # via higuma-dashboard
 pytz==2024.1
     # via pandas
 referencing==0.35.1

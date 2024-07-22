@@ -4,6 +4,10 @@ from streamlit_folium import folium_static
 import matplotlib.pyplot as plt
 import numpy as np
 import branca
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Streamlitのタイトル
 st.title("Folium Map in Streamlit")
@@ -13,7 +17,7 @@ map_center = [41.768793, 140.728810]  # 函館の座標
 zoom_level = 10
 
 # Mapboxのアクセストークンを設定
-mapbox_token = 'pk.eyJ1IjoiYXRvcmluZ28iLCJhIjoiY2x5MTVsZmJmMHMzczJqc2Y3eTF4OGloZSJ9.tirdN2DwOiWfieuPP0UXoA'
+mapbox_token = os.getenv("MAPBOX_TOKEN")
 
 # 日本語のMapboxタイルURL
 japanese_tiles = f'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{{z}}/{{x}}/{{y}}?access_token={mapbox_token}&language=ja'
