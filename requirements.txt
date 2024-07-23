@@ -1,5 +1,5 @@
 streamlit==1.36.0
-foliu==0.17.0
+folium==0.17.0
 streamlit-folium==0.21.0
 matplotlib==3.9.1
 numpy==2.0.0
