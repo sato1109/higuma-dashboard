@@ -18,6 +18,7 @@ blinker==1.8.2
     # via streamlit
 branca==0.7.2
     # via folium
+    # via higuma-dashboard
     # via streamlit-folium
 cachetools==5.3.3
     # via streamlit
