@@ -3,17 +3,14 @@ import folium
 from streamlit_folium import folium_static
 import matplotlib.pyplot as plt
 import numpy as np
-
-
-# ページ設定
-st.set_page_config(layout="wide")
-
 import branca
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
+# ページ設定
+st.set_page_config(layout="wide")
 
 # Streamlitのタイトル
 st.title("Folium Map in Streamlit")
