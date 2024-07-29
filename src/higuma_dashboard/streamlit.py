@@ -3,7 +3,9 @@ import folium
 from streamlit_folium import folium_static
 import matplotlib.pyplot as plt
 import numpy as np
-import branca
+
+# ページ設定
+st.set_page_config(layout="wide")
 
 # Streamlitのタイトル
 st.title("Folium Map in Streamlit")
@@ -17,6 +19,72 @@ mapbox_token = 'pk.eyJ1IjoiYXRvcmluZ28iLCJhIjoiY2x5MTVsZmJmMHMzczJqc2Y3eTF4OGloZ
 
 # 日本語のMapboxタイルURL
 japanese_tiles = f'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{{z}}/{{x}}/{{y}}?access_token={mapbox_token}&language=ja'
+
+# 初期値設定
+if 'initial_info' not in st.session_state:
+    st.session_state['initial_info'] = [
+        {
+            "name": "函館駅",
+            "location": [41.768793, 140.728810],
+            "established": 1902,
+            "html": """
+                <b>函館駅</b><br>
+                <i>所在地:</i> 北海道函館市<br>
+                <i>開業:</i> 1902年<br>
+                <i>運営:</i> JR北海道<br>
+                <i>路線:</i> 函館本線<br>
+                <img src="https://test-image-higuma.s3.ap-northeast-1.amazonaws.com/kuma.png" alt="函館駅" width="200">
+            """
+        },
+        {
+            "name": "はこだて未来大学",
+            "location": [41.841505, 140.766193],
+            "established": 2000,
+            "html": """
+                <b>はこだて未来大学</b><br>
+                <i>所在地:</i> 北海道函館市<br>
+                <i>設立:</i> 2000年<br>
+                <i>学部:</i> システム情報科学部<br>
+                <img src="https://test-image-higuma.s3.ap-northeast-1.amazonaws.com/FUN.jpg" alt="はこだて未来大学" width="200">
+            """
+        }
+    ]
+
+# 現在の表示情報を初期値に設定
+if 'location_info' not in st.session_state:
+    st.session_state['location_info'] = st.session_state['initial_info']
+
+# ボタンを画面上部に配置
+col1, col2 = st.columns([1, 1])
+with col1:
+    if st.button("くま"):
+        st.session_state['location_info'] = st.session_state['initial_info']
+        st.experimental_rerun()
+with col2:
+    if st.button("しか"):
+        st.session_state['location_info'] = [
+            {
+                "name": "函館駅",
+                "location": [41.768793, 140.728810],
+                "established": 1902,
+                "html": """
+                    <b>函館駅の鹿</b><br>
+                    <i>テスト:</i> 鹿の情報<br>
+                    <img src="https://test-image-higuma.s3.ap-northeast-1.amazonaws.com/shika.jpg" alt="函館駅" width="200">
+                """
+            },
+            {
+                "name": "はこだて未来大学",
+                "location": [41.841505, 140.766193],
+                "established": 2000,
+                "html": """
+                    <b>はこだて未来大学の鹿</b><br>
+                    <i>テスト:</i> 鹿の情報<br>
+                    <img src="https://test-image-higuma.s3.ap-northeast-1.amazonaws.com/shika.jpg" alt="はこだて未来大学" width="200">
+                """
+            }
+        ]
+        st.experimental_rerun()
 
 # Foliumで地図を作成（日本語Mapboxタイルを使用）
 m = folium.Map(
@@ -33,35 +101,6 @@ folium.TileLayer(
     control=True
 ).add_to(m)
 
-# 各地点の情報と設立年
-locations = [
-    {
-        "name": "函館駅",
-        "location": [41.768793, 140.728810],
-        "established": 1902,
-        "html": """
-            <b>函館駅</b><br>
-            <i>所在地:</i> 北海道函館市<br>
-            <i>開業:</i> 1902年<br>
-            <i>運営:</i> JR北海道<br>
-            <i>路線:</i> 函館本線<br>
-            <img src="https://test-image-higuma.s3.ap-northeast-1.amazonaws.com/kuma.png" alt="函館駅" width="200">
-        """
-    },
-    {
-        "name": "函館未来大学",
-        "location": [41.841505, 140.766193],
-        "established": 2000,
-        "html": """
-            <b>函館未来大学</b><br>
-            <i>所在地:</i> 北海道函館市<br>
-            <i>設立:</i> 2000年<br>
-            <i>学部:</i> システム情報科学部<br>
-            <img src="https://test-image-higuma.s3.ap-northeast-1.amazonaws.com/mirai.png" alt="函館未来大学" width="200">
-        """
-    }
-]
-
 # カラーバーで使用する色と対応する設立年の範囲を定義
 colors = ["#ffa07a", "#ff6347", "#ff0000"]
 year_ranges = [(2000, 2024), (1950, 1999), (1900, 1949)]
@@ -74,7 +113,7 @@ def get_color_by_year(established_year):
     return "#ffffff"  # デフォルトの色（範囲外の場合）
 
 # 各マーカーを追加
-for loc in locations:
+for loc in st.session_state['location_info']:
     color = get_color_by_year(loc["established"])
     folium.CircleMarker(
         location=loc["location"],
@@ -104,7 +143,7 @@ def create_color_bar():
 col1, col2 = st.columns([8, 1])  # カラムの比率を調整
 
 with col1:
-    folium_static(m, width=800, height=600)
+    folium_static(m, width=1600, height=1000)
 with col2:
     fig = create_color_bar()
     st.pyplot(fig)
