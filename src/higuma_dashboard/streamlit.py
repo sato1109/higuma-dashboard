@@ -4,16 +4,13 @@ from streamlit_folium import folium_static
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 # ページ設定
 st.set_page_config(layout="wide")
-=======
 import branca
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
-
 
 # Streamlitのタイトル
 st.title("Folium Map in Streamlit")
@@ -63,13 +60,13 @@ if 'location_info' not in st.session_state:
     st.session_state['location_info'] = st.session_state['initial_info']
 
 # ボタンを画面上部に配置
-col1, col2 = st.columns([1, 1])
+col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
 with col1:
-    if st.button("くま"):
+    if st.button("🐻 クマ"):
         st.session_state['location_info'] = st.session_state['initial_info']
-        st.experimental_rerun()
+        st.rerun()
 with col2:
-    if st.button("しか"):
+    if st.button("🫎 シカ"):
         st.session_state['location_info'] = [
             {
                 "name": "函館駅",
@@ -92,7 +89,57 @@ with col2:
                 """
             }
         ]
-        st.experimental_rerun()
+        st.rerun()
+with col3:
+    if st.button("🐦‍⬛ カラス"):
+        st.session_state['location_info'] = [
+            {
+                "name": "函館駅",
+                "location": [41.768793, 140.728810],
+                "established": 1902,
+                "html": """
+                    <b>函館駅のカラス</b><br>
+                    <i>テスト:</i> カラスの情報<br>
+                    <img src="https://test-image-higuma.s3.ap-northeast-1.amazonaws.com/crow.jpg" alt="函館駅" width="200">
+                """
+            },
+            {
+                "name": "はこだて未来大学",
+                "location": [41.841505, 140.766193],
+                "established": 2000,
+                "html": """
+                    <b>はこだて未来大学のカラス</b><br>
+                    <i>テスト:</i> カラスの情報<br>
+                    <img src="https://test-image-higuma.s3.ap-northeast-1.amazonaws.com/crow.jpg" alt="はこだて未来大学" width="200">
+                """
+            }
+        ]
+        st.rerun()
+with col4:
+    if st.button("🦊 キツネ"):
+        st.session_state['location_info'] = [
+            {
+                "name": "函館駅",
+                "location": [41.768793, 140.728810],
+                "established": 1902,
+                "html": """
+                    <b>函館駅のキツネ</b><br>
+                    <i>テスト:</i> キツネの情報<br>
+                    <img src="https://test-image-higuma.s3.ap-northeast-1.amazonaws.com/kitune.jpg" alt="函館駅" width="200">
+                """
+            },
+            {
+                "name": "はこだて未来大学",
+                "location": [41.841505, 140.766193],
+                "established": 2000,
+                "html": """
+                    <b>はこだて未来大学のキツネ</b><br>
+                    <i>テスト:</i> キツネの情報<br>
+                    <img src="https://test-image-higuma.s3.ap-northeast-1.amazonaws.com/kitune.jpg" alt="はこだて未来大学" width="200">
+                """
+            }
+        ]
+        st.rerun()
 
 # Foliumで地図を作成（日本語Mapboxタイルを使用）
 m = folium.Map(
