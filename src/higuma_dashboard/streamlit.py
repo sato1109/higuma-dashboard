@@ -59,14 +59,16 @@ if 'initial_info' not in st.session_state:
 if 'location_info' not in st.session_state:
     st.session_state['location_info'] = st.session_state['initial_info']
 
-# ボタンを画面上部に配置
-col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
-with col1:
-    if st.button("🐻 クマ"):
+# 列を細かく作成して、ボタン間の空白を減らす
+cols = st.columns(8)  # より多くの列を作成する
+
+with cols[0]:
+    if st.button("🐻 クマ", key="bear"):
         st.session_state['location_info'] = st.session_state['initial_info']
-        st.rerun()
-with col2:
-    if st.button("🫎 シカ"):
+        st.experimental_rerun()
+
+with cols[1]:
+    if st.button("🫎 シカ", key="deer"):
         st.session_state['location_info'] = [
             {
                 "name": "函館駅",
@@ -89,9 +91,10 @@ with col2:
                 """
             }
         ]
-        st.rerun()
-with col3:
-    if st.button("🐦‍⬛ カラス"):
+        st.experimental_rerun()
+
+with cols[2]:
+    if st.button("🐦‍⬛ カラス", key="crow"):
         st.session_state['location_info'] = [
             {
                 "name": "函館駅",
@@ -114,9 +117,10 @@ with col3:
                 """
             }
         ]
-        st.rerun()
-with col4:
-    if st.button("🦊 キツネ"):
+        st.experimental_rerun()
+
+with cols[3]:
+    if st.button("🦊 キツネ", key="fox"):
         st.session_state['location_info'] = [
             {
                 "name": "函館駅",
@@ -139,7 +143,7 @@ with col4:
                 """
             }
         ]
-        st.rerun()
+        st.experimental_rerun()
 
 # Foliumで地図を作成（日本語Mapboxタイルを使用）
 m = folium.Map(
