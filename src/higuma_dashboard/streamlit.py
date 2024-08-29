@@ -59,8 +59,8 @@ if 'initial_info' not in st.session_state:
 if 'location_info' not in st.session_state:
     st.session_state['location_info'] = st.session_state['initial_info']
 
-# 列を細かく作成して、ボタン間の空白を減らす
-cols = st.columns(8)  # より多くの列を作成する
+# ボタン間の空白を減らす
+cols = st.columns(8)  # より多くの列を作成
 
 with cols[0]:
     if st.button("🐻 クマ", key="bear"):
